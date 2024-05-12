@@ -44,4 +44,9 @@ class Team extends JetstreamTeam
             'personal_team' => 'boolean',
         ];
     }
+
+    public function boards()
+    {
+        return $this->hasMany(Board::class);
+    }
 }

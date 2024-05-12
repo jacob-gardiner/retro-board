@@ -7,6 +7,7 @@
 /vendor
 .env
 .env.backup
+.env.testing
 .env.production
 .phpunit.result.cache
 Homestead.json
@@ -17,3 +18,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+tink.php
