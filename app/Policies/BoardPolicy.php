@@ -25,9 +25,11 @@ class BoardPolicy
         return true;
     }
 
-    public function update(User $user, Board $board): bool
+    public function update(User $user, Board $board): Response
     {
-        return true;
+        return $user->current_team_id === $board->team_id
+            ? Response::allow()
+            : Response::denyAsNotFound();
     }
 
     public function delete(User $user, Board $board): bool
