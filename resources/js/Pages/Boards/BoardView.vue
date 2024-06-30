@@ -11,6 +11,11 @@ Echo.private(`boards.${board.id}`)
     .listen('ColumnCreated', (e) => {
         router.reload({only: ['board']})
     });
+
+Echo.private(`boards.${board.id}`)
+    .listen('CardCreated', (e) => {
+        router.reload({only: ['board']})
+    });
 </script>
 
 <template>
@@ -22,10 +27,10 @@ Echo.private(`boards.${board.id}`)
         </template>
         <div class="flex flex-col grow">
             <div class="flex overflow-x-auto">
-                <div v-for="column in board.columns" class="border-2 column flex flex-col justify-between">
+                <div v-for="column in board.columns" class="border-r-4 border-dashed column flex flex-col justify-between">
                     <Column :column="column"/>
                     <div class="flex justify-center">
-                        <CreateCard />
+                        <CreateCard :boardId="board.id" :columnId="column.id"/>
                     </div>
                 </div>
                 <div class="column p-3">

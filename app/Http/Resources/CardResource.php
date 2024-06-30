@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ColumnResource extends JsonResource
+class CardResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,12 +17,10 @@ class ColumnResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'board_id' => $this->resource->board_id,
-            'title' => $this->resource->title,
+            'column_id' => $this->resource->column_id,
+            'text' => $this->resource->text,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
-            $this->mergeWhen($this->resource->relationLoaded('cards'), [
-                'cards' => CardResource::collection($this->whenLoaded('cards'))
-            ])
         ];
     }
 }
