@@ -23,4 +23,6 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('boards', \App\Http\Controllers\BoardController::class);
+    Route::resource('boards.columns', \App\Http\Controllers\BoardColumnController::class)->only(['store']);
+
 });
