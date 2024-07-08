@@ -24,5 +24,6 @@ Route::middleware([
 
     Route::resource('boards', \App\Http\Controllers\BoardController::class);
     Route::resource('boards.columns', \App\Http\Controllers\BoardColumnController::class)->only(['store']);
+    Route::resource('boards.columns.cards', \App\Http\Controllers\BoardColumnCardController::class)->only(['store']);
 
 });
