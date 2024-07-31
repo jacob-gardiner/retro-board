@@ -17,10 +17,10 @@ class UpdateBoardColumnControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $user = User::factory()->create([
-            'current_team_id' => $team->id
+            'current_team_id' => $team->id,
         ]);
         $board = Board::factory()->hasColumns()->create([
-            'team_id' => $user->current_team_id
+            'team_id' => $user->current_team_id,
         ]);
         $column = $board->columns->first();
 
@@ -33,7 +33,7 @@ class UpdateBoardColumnControllerTest extends TestCase
         $this->actingAs($user)
             ->put(route($this->route, [
                 'board' => $board->id,
-                'column' => $column->id
+                'column' => $column->id,
             ]), ['title' => $expected['title']])
             ->assertOk();
 
@@ -45,17 +45,17 @@ class UpdateBoardColumnControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $user = User::factory()->create([
-            'current_team_id' => $team->id
+            'current_team_id' => $team->id,
         ]);
         $board = Board::factory()->hasColumns()->create([
-            'team_id' => $user->current_team_id
+            'team_id' => $user->current_team_id,
         ]);
         $column = $board->columns->first();
 
         $this->actingAs($user)
             ->put(route($this->route, [
                 'board' => $board->id,
-                'column' => $column->id
+                'column' => $column->id,
             ]), ['title' => 'a'])
             ->assertRedirect()
             ->assertSessionHasErrors(['title']);
@@ -72,7 +72,7 @@ class UpdateBoardColumnControllerTest extends TestCase
         $user = User::factory()->create();
         $team = Team::factory()->create();
         $board = Board::factory()->hasColumns()->create([
-            'team_id' => $team->id
+            'team_id' => $team->id,
         ]);
         $column = $board->columns->first();
 
@@ -83,7 +83,7 @@ class UpdateBoardColumnControllerTest extends TestCase
         $this->actingAs($user)
             ->put(route($this->route, [
                 'board' => $board->id,
-                'column' => $column->id
+                'column' => $column->id,
             ]), $expected)
             ->assertNotFound();
 
@@ -95,7 +95,7 @@ class UpdateBoardColumnControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $board = Board::factory()->hasColumns()->create([
-            'team_id' => $team->id
+            'team_id' => $team->id,
         ]);
         $column = $board->columns->first();
         $expected = [
@@ -104,7 +104,7 @@ class UpdateBoardColumnControllerTest extends TestCase
 
         $this->put(route($this->route, [
             'board' => $board->id,
-            'column' => $column->id
+            'column' => $column->id,
         ]), $expected)
             ->assertRedirectToRoute('login');
 

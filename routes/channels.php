@@ -9,5 +9,6 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 
 Broadcast::channel('boards.{boardId}', function ($user, $boardId) {
     $board = Board::findOrFail($boardId);
+
     return $user->current_team_id === $board->team_id;
 });

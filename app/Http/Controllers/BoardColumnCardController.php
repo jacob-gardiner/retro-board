@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Events\CardCreated;
-use App\Events\ColumnCreated;
 use App\Http\Requests\Cards\StoreCardRequest;
 use App\Models\Board;
 use App\Models\Card;
 use App\Models\Column;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class BoardColumnCardController extends Controller

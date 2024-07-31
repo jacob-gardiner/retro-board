@@ -21,7 +21,7 @@ class BoardFactory extends Factory
         return [
             'team_id' => Team::factory(),
             'created_by' => User::factory(),
-            'title' => $this->faker->words(3, true)
+            'title' => $this->faker->words(3, true),
         ];
     }
 }

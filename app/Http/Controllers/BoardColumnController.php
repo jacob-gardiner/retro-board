@@ -7,9 +7,7 @@ use App\Http\Requests\Columns\StoreColumnRequest;
 use App\Http\Requests\Columns\UpdateColumnRequest;
 use App\Models\Board;
 use App\Models\Column;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Nette\NotImplementedException;
 
 class BoardColumnController extends Controller
 {

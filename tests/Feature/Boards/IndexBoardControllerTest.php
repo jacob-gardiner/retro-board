@@ -3,7 +3,6 @@
 namespace Tests\Feature\Boards;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -18,9 +17,9 @@ class IndexBoardControllerTest extends TestCase
 
         $this->actingAs($user)
             ->get(route('boards.index'))
-            ->assertInertia(fn(AssertableInertia $page) => $page
+            ->assertInertia(fn (AssertableInertia $page) => $page
                 ->component('Boards/BoardList')
-                ->has('boards', 3, fn(AssertableInertia $page) => $page
+                ->has('boards', 3, fn (AssertableInertia $page) => $page
                     ->where('team_id', $user->personalTeam()->id)
                     ->etc()
                 )
