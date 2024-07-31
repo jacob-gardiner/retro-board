@@ -1,41 +1,45 @@
-import {mount} from '@vue/test-utils'
-import CreateColumn from "@/Pages/Boards/Components/Columns/CreateColumn.vue";
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from '@inertiajs/vue3';
+import { mount } from '@vue/test-utils';
+
+import CreateColumn from '@/Pages/Boards/Components/Columns/CreateColumn.vue';
 
 vi.mock('@inertiajs/vue3', () => {
-    const post = vi.fn()
-    const useForm = vi.fn().mockImplementation((args) => ({
-        ...args,
-        post,
-        errors: {}
-    }))
+  const post = vi.fn();
+  const useForm = vi.fn().mockImplementation((args) => ({
+    ...args,
+    post,
+    errors: {},
+  }));
 
-    return {
-        useForm
-    }
-})
+  return {
+    useForm,
+  };
+});
 
 describe('CreateColumn', () => {
-    it('posts to the API to create a column', async () => {
-        const boardId = 1;
+  it('posts to the API to create a column', async () => {
+    const boardId = 1;
 
-        const form = useForm({});
+    const form = useForm({});
 
-        const wrapper = mount(CreateColumn, {
-            props: {
-                boardId
-            }
-        })
+    const wrapper = mount(CreateColumn, {
+      props: {
+        boardId,
+      },
+    });
 
-        const input = wrapper.find('input')
+    const input = wrapper.find('input');
 
-        await input.setValue('What went well?')
+    await input.setValue('What went well?');
 
-        await wrapper.find('form').trigger('submit.prevent')
+    await wrapper.find('form').trigger('submit.prevent');
 
-        expect(form.post).toHaveBeenCalledTimes(1)
-        expect(form.post).toHaveBeenCalledWith(`/boards/${boardId}/columns`, expect.objectContaining({
-            onSuccess: expect.anything()
-        }))
-    })
-})
+    expect(form.post).toHaveBeenCalledTimes(1);
+    expect(form.post).toHaveBeenCalledWith(
+      `/boards/${boardId}/columns`,
+      expect.objectContaining({
+        onSuccess: expect.anything(),
+      }),
+    );
+  });
+});
