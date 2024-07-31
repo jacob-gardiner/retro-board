@@ -18,8 +18,8 @@ class BoardResource extends JsonResource
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
             $this->mergeWhen($this->resource->relationLoaded('columns'), [
-                'columns' => ColumnResource::collection($this->whenLoaded('columns'))
-            ])
+                'columns' => ColumnResource::collection($this->whenLoaded('columns')),
+            ]),
         ];
     }
 }

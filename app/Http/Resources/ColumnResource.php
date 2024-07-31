@@ -21,8 +21,8 @@ class ColumnResource extends JsonResource
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
             $this->mergeWhen($this->resource->relationLoaded('cards'), [
-                'cards' => CardResource::collection($this->whenLoaded('cards'))
-            ])
+                'cards' => CardResource::collection($this->whenLoaded('cards')),
+            ]),
         ];
     }
 }

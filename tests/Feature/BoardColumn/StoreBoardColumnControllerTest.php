@@ -15,10 +15,10 @@ class StoreBoardColumnControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $user = User::factory()->create([
-            'current_team_id' => $team->id
+            'current_team_id' => $team->id,
         ]);
         $board = Board::factory()->create([
-            'team_id' => $user->current_team_id
+            'team_id' => $user->current_team_id,
         ]);
 
         $expected = [
@@ -28,7 +28,7 @@ class StoreBoardColumnControllerTest extends TestCase
 
         $this->actingAs($user)
             ->postJson(route('boards.columns.store', [
-                'board' => $board->id
+                'board' => $board->id,
             ]), ['title' => $expected['title']])
             ->assertOk();
 
@@ -40,10 +40,10 @@ class StoreBoardColumnControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $user = User::factory()->create([
-            'current_team_id' => $team->id
+            'current_team_id' => $team->id,
         ]);
         $board = Board::factory()->create([
-            'team_id' => $user->current_team_id
+            'team_id' => $user->current_team_id,
         ]);
 
         $this->actingAs($user)
@@ -60,7 +60,7 @@ class StoreBoardColumnControllerTest extends TestCase
         $user = User::factory()->create();
         $team = Team::factory()->create();
         $board = Board::factory()->create([
-            'team_id' => $team->id
+            'team_id' => $team->id,
         ]);
         $expected = [
             'title' => 'Some sweet retro',
@@ -78,7 +78,7 @@ class StoreBoardColumnControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $board = Board::factory()->create([
-            'team_id' => $team->id
+            'team_id' => $team->id,
         ]);
         $expected = [
             'title' => 'Some sweet retro',

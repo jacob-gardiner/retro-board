@@ -17,12 +17,12 @@ class StoreBoardColumnCardControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $user = User::factory()->create([
-            'current_team_id' => $team->id
+            'current_team_id' => $team->id,
         ]);
         $board = Board::factory()
             ->hasColumns()
             ->create([
-                'team_id' => $user->current_team_id
+                'team_id' => $user->current_team_id,
             ]);
         $column = $board->columns->first();
         $expected = [
@@ -34,7 +34,7 @@ class StoreBoardColumnCardControllerTest extends TestCase
         $this->actingAs($user)
             ->post(route($this->route, [
                 'board' => $board->id,
-                'column' => $column->id
+                'column' => $column->id,
             ]), ['text' => $expected['text']])
             ->assertOk();
 
@@ -46,12 +46,12 @@ class StoreBoardColumnCardControllerTest extends TestCase
     {
         $team = Team::factory()->create();
         $user = User::factory()->create([
-            'current_team_id' => $team->id
+            'current_team_id' => $team->id,
         ]);
         $board = Board::factory()
             ->hasColumns()
             ->create([
-                'team_id' => $user->current_team_id
+                'team_id' => $user->current_team_id,
             ]);
         $column = $board->columns->first();
         $expected = [
@@ -63,7 +63,7 @@ class StoreBoardColumnCardControllerTest extends TestCase
         $this->actingAs($user)
             ->post(route($this->route, [
                 'board' => $board->id,
-                'column' => $column->id
+                'column' => $column->id,
             ]), ['text' => $expected['text']])
             ->assertRedirect()
             ->assertSessionHasErrors(['text']);
@@ -80,7 +80,7 @@ class StoreBoardColumnCardControllerTest extends TestCase
         $board = Board::factory()
             ->hasColumns()
             ->create([
-                'team_id' => $team->id
+                'team_id' => $team->id,
             ]);
         $column = $board->columns->first();
         $expected = [
@@ -90,7 +90,7 @@ class StoreBoardColumnCardControllerTest extends TestCase
         $this->actingAs($user)
             ->post(route($this->route, [
                 'board' => $board->id,
-                'column' => $column->id
+                'column' => $column->id,
             ]), ['text' => $expected['text']])
             ->assertNotFound();
 
@@ -104,7 +104,7 @@ class StoreBoardColumnCardControllerTest extends TestCase
         $board = Board::factory()
             ->hasColumns()
             ->create([
-                'team_id' => $team->id
+                'team_id' => $team->id,
             ]);
         $column = $board->columns->first();
         $expected = [
@@ -113,7 +113,7 @@ class StoreBoardColumnCardControllerTest extends TestCase
 
         $this->post(route($this->route, [
             'board' => $board->id,
-            'column' => $column->id
+            'column' => $column->id,
         ]), ['text' => $expected['text']])
             ->assertRedirectToRoute('login');
 
