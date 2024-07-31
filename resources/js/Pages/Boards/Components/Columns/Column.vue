@@ -1,14 +1,13 @@
 <script setup>
 import RetroCard from "@/Pages/Boards/Components/Columns/RetroCard.vue";
+import ColumnTitle from "@/Pages/Boards/Components/Columns/ColumnTitle.vue";
 
 const {column} = defineProps({column: Object})
 </script>
 
 <template>
     <div class="">
-        <h3 class="text-2xl capitalize tracking-wider text-gray-500 px-3">
-            {{ column.title }}
-        </h3>
+        <ColumnTitle :column="column" />
         <RetroCard v-for="card in column.cards" :key="card.id" :card="card" />
     </div>
 </template>
