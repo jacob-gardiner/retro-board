@@ -15,6 +15,11 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .directive('focus', {
+                mounted(el) {
+                    el.focus()
+                }
+            })
             .mount(el);
     },
     progress: {

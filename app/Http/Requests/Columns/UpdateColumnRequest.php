@@ -4,7 +4,7 @@ namespace App\Http\Requests\Columns;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreColumnRequest extends FormRequest
+class UpdateColumnRequest extends FormRequest
 {
     public function rules(): array
     {
