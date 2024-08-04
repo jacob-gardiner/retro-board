@@ -29,6 +29,7 @@ class StoreBoardColumnCardControllerTest extends TestCase
             'text' => 'A happy little card',
             'board_id' => $board->id,
             'column_id' => $column->id,
+            'user_id' => $user->id,
         ];
 
         $this->actingAs($user)

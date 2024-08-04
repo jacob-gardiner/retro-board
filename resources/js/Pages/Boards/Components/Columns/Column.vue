@@ -8,6 +8,14 @@ const { column } = defineProps({ column: Object });
 <template>
   <div class="">
     <ColumnTitle :column="column" />
-    <RetroCard v-for="card in column.cards" :key="card.id" :card="card" />
+    <div class="flex flex-wrap">
+      <RetroCard
+        v-for="card in column.cards"
+        :key="card.id"
+        :card="card"
+        :color="card.user.color"
+        :name="card.user.name"
+      />
+    </div>
   </div>
 </template>

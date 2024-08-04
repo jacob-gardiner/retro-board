@@ -13,15 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->withPersonalTeam()->create();
-
-        $team = Team::factory()->create();
         $owner = User::factory()->withPersonalTeam()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'current_team_id' => $team->id,
+        ]);
+        $team = Team::factory()->create([
+            'user_id' => $owner->id,
         ]);
 
+        $owner->update([
+            'current_team_id' => $team->id,
+        ]);
         $other = User::factory()->withPersonalTeam()->create([
             'name' => 'Other User',
             'email' => 'other@example.com',
