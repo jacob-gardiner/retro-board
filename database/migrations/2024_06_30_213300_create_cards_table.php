@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('board_id')->constrained()->cascadeOnDelete();
             $table->foreignId('column_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('text');
             $table->timestamps();
             $table->softDeletes();

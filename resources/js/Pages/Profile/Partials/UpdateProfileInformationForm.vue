@@ -1,6 +1,6 @@
 <script setup>
-import { Link, router, useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Link, router, useForm, usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 
 import ActionMessage from '@/Components/ActionMessage.vue';
 import FormSection from '@/Components/FormSection.vue';
@@ -19,6 +19,7 @@ const form = useForm({
   name: props.user.name,
   email: props.user.email,
   photo: null,
+  color: props.user.color,
 });
 
 const verificationLinkSent = ref(null);
@@ -74,6 +75,8 @@ const clearPhotoFileInput = () => {
     photoInput.value.value = null;
   }
 };
+const page = usePage();
+const colors = computed(() => page.props.cardColors);
 </script>
 
 <template>
@@ -191,6 +194,34 @@ const clearPhotoFileInput = () => {
           >
             A new verification link has been sent to your email address.
           </div>
+        </div>
+      </div>
+
+      <!-- color -->
+      <div class="col-span-8 sm:col-span-6">
+        <InputLabel for="color" value="Card Color" />
+        <div class="flex flex-wrap">
+          <div
+            v-for="color in colors"
+            :class="`p-2 mr-2 mb-2 rounded text-center w-1/5 cursor-pointer hover:shadow-md border-b-2 ${color === form.color ? `shadow bg-${color}-100 border-${color}-500 ` : `shadow-inner bg-${color}-50`}`"
+            @click="form.color = color"
+          >
+            <label
+              :for="color"
+              :class="`${color === form.color ? `text-${color}-900` : `text-${color}-700`} font-bold cursor-pointer capitalize`"
+              >{{ color }}</label
+            >
+            <input
+              :id="color"
+              v-model="form.color"
+              type="radio"
+              :value="color"
+              name="color"
+              class="hidden"
+              required
+            />
+          </div>
+          <InputError :message="form.errors.color" class="mt-2" />
         </div>
       </div>
     </template>

@@ -18,6 +18,7 @@ class BoardColumnCardController extends Controller
         Card::create([
             'board_id' => $board->id,
             'column_id' => $column->id,
+            'user_id' => auth()->id(),
             'text' => $request->validated('text'),
         ]);
 
