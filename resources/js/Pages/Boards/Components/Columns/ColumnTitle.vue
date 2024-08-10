@@ -1,12 +1,21 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import { useToggle } from '@vueuse/core';
+import { useActiveElement, useToggle } from '@vueuse/core';
+import { onMounted, ref, watch, watchEffect } from 'vue';
 
 import TextInput from '@/Components/TextInput.vue';
 
 const { column } = defineProps({ column: Object });
 
 const [isEditing, toggle] = useToggle();
+
+const columnTitle = ref(null);
+
+watchEffect(() => {
+  if (columnTitle.value) {
+    columnTitle.value.focus();
+  }
+});
 
 const form = useForm({
   title: column.title,
@@ -25,7 +34,8 @@ const submit = () => {
   <div class="p-4">
     <form @submit.prevent="submit" v-if="isEditing">
       <TextInput
-        @keyup.esc="toggle()"
+        ref="columnTitle"
+        @keyup.esc="isEditing = false"
         @keyup.enter="isEditing = false"
         @focusout="isEditing = false"
         v-focus
