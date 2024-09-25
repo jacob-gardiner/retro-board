@@ -1,5 +1,5 @@
 <script setup>
-import { useDraggable, usePointer } from '@vueuse/core';
+import { usePointer } from '@vueuse/core';
 import { inject, ref, watch } from 'vue';
 
 import CardBody from '@/Pages/Boards/Components/Columns/CardBody.vue';
@@ -10,7 +10,7 @@ const isDragging = ref(false);
 const el = ref(null);
 const style = ref({ left: `0px`, top: `0px` });
 
-const { x: pointerX, y: pointerY, pressure, pointerType } = usePointer();
+const { x: pointerX, y: pointerY, pressure } = usePointer();
 
 watch(pressure, () => {
   if (pressure.value === 0) {
@@ -21,6 +21,7 @@ watch(pressure, () => {
     }
   }
 });
+
 watch([pointerX, pointerY, pressure], () => {
   if (pressure.value === 0.5) {
     style.value = {
@@ -42,18 +43,19 @@ const { updateDraggingCard, dropCard } = inject('draggingCard');
   <div class="">
     <div
       v-if="isDragging"
-      :class="`p-3 rounded cursor-grabbing rotate-12 shadow-md mb-2 mx-2 w-28 bg-${color}-100`"
+      :class="`p-3 rounded cursor-grabbing rotate-12 fixed z-50 shadow-md mb-2 mx-2 w-28 bg-${color}-100`"
+      :data-testid="`retroCard-dragging-${card.id}`"
       ref="el"
       :style="style"
-      style="position: fixed; z-index: 9999999"
     >
-      <CardBody :card="card" :color="card.user.color" :name="card.user.name" />
+      <CardBody :card="card" :color="color" :name="name" />
     </div>
     <div
       @mousedown="dragStart"
+      :data-testid="`retroCard-${card.id}`"
       :class="`p-3 rounded shadow cursor-grab mb-2 mx-2 w-28  ${isDragging ? `shadow-inner opacity-75 backdrop-blur-md bg-${color}-100/30` : `bg-${color}-100`}`"
     >
-      <CardBody :card="card" :color="card.user.color" :name="card.user.name" />
+      <CardBody :card="card" :color="color" :name="name" />
     </div>
   </div>
 </template>

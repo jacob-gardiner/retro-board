@@ -9,7 +9,7 @@ class UpdateCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'column_id' => 'required|integer'
+            'column_id' => 'required|integer',
         ];
     }
 }

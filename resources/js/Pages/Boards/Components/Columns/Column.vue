@@ -8,14 +8,13 @@ import RetroCard from '@/Pages/Boards/Components/Columns/RetroCard.vue';
 const { column } = defineProps({ column: Object });
 
 const dropZone = ref(null);
-const { x, y, isOutside } = useMouseInElement(dropZone);
+const { isOutside } = useMouseInElement(dropZone);
 
 const { focusedColumn, updateFocusedColumn } = inject('focusedColumn');
 const { draggingCard } = inject('draggingCard');
 
 watch(isOutside, () => {
   if (isOutside.value) {
-    updateFocusedColumn(null);
     return;
   }
   updateFocusedColumn(column);
@@ -30,6 +29,7 @@ const showDropStyles = computed(() => {
   <div
     class="h-full"
     ref="dropZone"
+    :data-testid="`column-${column.id}`"
     :class="{
       'opacity-50 bg-gray-50': showDropStyles,
     }"

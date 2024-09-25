@@ -12,11 +12,16 @@ const { board } = defineProps({ board: Object });
 Echo.private(`boards.${board.id}`).listen('ColumnCreated', (e) => {
   router.reload({ only: ['board'] });
 });
+
 Echo.private(`boards.${board.id}`).listen('ColumnUpdated', (e) => {
   router.reload({ only: ['board'] });
 });
 
 Echo.private(`boards.${board.id}`).listen('CardCreated', (e) => {
+  router.reload({ only: ['board'] });
+});
+
+Echo.private(`boards.${board.id}`).listen('CardUpdated', (e) => {
   router.reload({ only: ['board'] });
 });
 </script>
