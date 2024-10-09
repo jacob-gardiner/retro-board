@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\CardCreated;
+use App\Events\CardUpdated;
 use App\Http\Requests\Cards\StoreCardRequest;
+use App\Http\Requests\Cards\UpdateCardRequest;
 use App\Models\Board;
 use App\Models\Card;
 use App\Models\Column;
@@ -23,5 +25,18 @@ class BoardColumnCardController extends Controller
         ]);
 
         CardCreated::dispatch($board);
+    }
+
+    public function update(UpdateCardRequest $request, Board $board, Column $column, Card $card)
+    {
+        Gate::authorize('update', $board);
+
+        $column = Column::findOrFail($request->validated('column_id'));
+
+        $card->update([
+            'column_id' => $request->validated('column_id'),
+        ]);
+
+        CardUpdated::dispatch($column->board);
     }
 }
