@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { useElementSize } from '@vueuse/core';
+import { provide, ref } from 'vue';
 
 import ApplicationMark from '@/Components/ApplicationMark.vue';
 import Banner from '@/Components/Banner.vue';
@@ -14,7 +15,9 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
+const el = ref(null);
 
+const { height: contentHeight } = useElementSize(el);
 const switchToTeam = (team) => {
   router.put(
     route('current-team.update'),
@@ -30,6 +33,10 @@ const switchToTeam = (team) => {
 const logout = () => {
   router.post(route('logout'));
 };
+
+provide('pageDetails', {
+  contentHeight,
+});
 </script>
 
 <template>
@@ -421,7 +428,7 @@ const logout = () => {
       </header>
 
       <!-- Page Content -->
-      <main class="grow">
+      <main class="grow" ref="el">
         <slot />
       </main>
     </div>

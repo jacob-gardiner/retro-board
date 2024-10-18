@@ -23,6 +23,7 @@ watch(isOutside, () => {
 const showDropStyles = computed(() => {
   return focusedColumn.value?.id !== column?.id && draggingCard.value;
 });
+// const contentHeight = 800;
 </script>
 
 <template>
@@ -34,6 +35,7 @@ const showDropStyles = computed(() => {
       'opacity-50 bg-gray-50': showDropStyles,
     }"
   >
+    {{ contentHeight }}
     <ColumnTitle :column="column" />
     <div class="flex flex-wrap">
       <RetroCard
