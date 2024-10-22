@@ -2,7 +2,7 @@ import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 export const useBoardInteractions = () => {
-  const focusedColumn = ref('snickers');
+  const focusedColumn = ref(null);
   const updateFocusedColumn = (column) => {
     focusedColumn.value = column;
   };

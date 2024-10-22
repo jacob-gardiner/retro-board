@@ -23,7 +23,6 @@ watch(isOutside, () => {
 const showDropStyles = computed(() => {
   return focusedColumn.value?.id !== column?.id && draggingCard.value;
 });
-// const contentHeight = 800;
 </script>
 
 <template>
