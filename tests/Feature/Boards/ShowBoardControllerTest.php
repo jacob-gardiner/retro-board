@@ -2,7 +2,11 @@
 
 namespace Boards;
 
+use App\Models\Board;
+use App\Models\Card;
+use App\Models\Column;
 use App\Models\User;
+use App\Models\Vote;
 use Inertia\Testing\AssertableInertia;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -20,6 +24,34 @@ class ShowBoardControllerTest extends TestCase
                 ->component('Boards/BoardView')
                 ->has('board', fn (AssertableInertia $page) => $page
                     ->where('id', $board->id)
+                    ->etc()
+                )
+            );
+    }
+
+    #[Test]
+    public function it_loads_expected_relationships()
+    {
+        $user = User::factory()->withPersonalTeam(fn ($team) => $team->has(
+            Board::factory()->has(
+                Column::factory()->has(
+                    Card::factory()->has(
+                        Vote::factory()
+                    )
+                )
+            )
+        ))->create();
+
+        $board = $user->currentTeam->boards->first();
+
+        $this->actingAs($user)
+            ->get(route('boards.show', $board))
+            ->assertInertia(fn (AssertableInertia $page) => $page
+                ->component('Boards/BoardView')
+                ->has('board', fn (AssertableInertia $page) => $page
+                    ->where('id', $board->id)
+                    ->has('columns.0.cards.0.votes')
+                    ->has('columns.0.cards.0.user')
                     ->etc()
                 )
             );

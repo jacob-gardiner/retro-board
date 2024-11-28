@@ -3,27 +3,19 @@ import { router } from '@inertiajs/vue3';
 
 import AppLayout from '@/Layouts/AppLayout.vue';
 import BoardInteractionsProvider from '@/Pages/Boards/BoardInteractionsProvider.vue';
-import Column from '@/Pages/Boards/Components/Columns/Column.vue';
-import CreateCard from '@/Pages/Boards/Components/Columns/CreateCard.vue';
-import CreateColumn from '@/Pages/Boards/Components/Columns/CreateColumn.vue';
+import RetroBoard from '@/Pages/Boards/Components/RetroBoard.vue';
 
 const { board } = defineProps({ board: Object });
 
-Echo.private(`boards.${board.id}`).listen('ColumnCreated', (e) => {
+const reloadBoard = () => {
   router.reload({ only: ['board'] });
-});
+};
 
-Echo.private(`boards.${board.id}`).listen('ColumnUpdated', (e) => {
-  router.reload({ only: ['board'] });
-});
-
-Echo.private(`boards.${board.id}`).listen('CardCreated', (e) => {
-  router.reload({ only: ['board'] });
-});
-
-Echo.private(`boards.${board.id}`).listen('CardUpdated', (e) => {
-  router.reload({ only: ['board'] });
-});
+Echo.private(`boards.${board.id}`).listen('ColumnCreated', reloadBoard);
+Echo.private(`boards.${board.id}`).listen('ColumnUpdated', reloadBoard);
+Echo.private(`boards.${board.id}`).listen('CardCreated', reloadBoard);
+Echo.private(`boards.${board.id}`).listen('CardUpdated', reloadBoard);
+Echo.private(`boards.${board.id}`).listen('VoteCreated', reloadBoard);
 </script>
 
 <template>
@@ -34,29 +26,7 @@ Echo.private(`boards.${board.id}`).listen('CardUpdated', (e) => {
       </h2>
     </template>
     <BoardInteractionsProvider>
-      <div class="flex flex-col grow">
-        <div class="flex overflow-x-auto">
-          <div
-            v-for="column in board.columns"
-            class="border-r-4 border-dashed column flex flex-col justify-between"
-          >
-            <Column :column="column" />
-            <div class="flex justify-center">
-              <CreateCard :boardId="board.id" :columnId="column.id" />
-            </div>
-          </div>
-          <div class="column p-3">
-            <CreateColumn :boardId="board.id" />
-          </div>
-        </div>
-      </div>
+      <RetroBoard :board="board" />
     </BoardInteractionsProvider>
   </AppLayout>
 </template>
-
-<style scoped>
-.column {
-  min-width: 33.3333vw;
-  min-height: 75vh;
-}
-</style>

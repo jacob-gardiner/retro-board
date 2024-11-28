@@ -21,6 +21,7 @@ class CardResource extends JsonResource
             'text' => $this->resource->text,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
+            'votes' => VoteResource::collection($this->whenLoaded('votes')),
             $this->mergeWhen($this->resource->relationLoaded('user'), [
                 'user' => UserResource::make($this->whenLoaded('user')),
             ]),
