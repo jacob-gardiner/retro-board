@@ -2,10 +2,12 @@
 
 namespace BoardColumnCard;
 
+use App\Events\CardUpdated;
 use App\Models\Board;
 use App\Models\Card;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -15,6 +17,7 @@ class UpdateBoardColumnCardControllerTest extends TestCase
 
     public function test_it_can_update_the_cards_column()
     {
+        Event::fake();
         $team = Team::factory()->create();
         $user = User::factory()->create([
             'current_team_id' => $team->id,
@@ -40,6 +43,8 @@ class UpdateBoardColumnCardControllerTest extends TestCase
                 'card' => $card->id,
             ]), ['column_id' => $targetColumn->id])
             ->assertOk();
+
+        Event::assertDispatched(CardUpdated::class);
 
         $this->assertDatabaseHas('cards', [
             'id' => $card->id,
@@ -83,6 +88,8 @@ class UpdateBoardColumnCardControllerTest extends TestCase
     #[Test]
     public function it_is_inaccessible_to_guests()
     {
+        Event::fake();
+
         $team = Team::factory()->create();
         $user = User::factory()->create([
             'current_team_id' => $team->id,
@@ -107,6 +114,8 @@ class UpdateBoardColumnCardControllerTest extends TestCase
             'card' => $card->id,
         ]), ['column_id' => $targetColumn->id])
             ->assertUnauthorized();
+
+        Event::assertNotDispatched(CardUpdated::class);
 
         $this->assertDatabaseMissing('cards', [
             'id' => $card->id,

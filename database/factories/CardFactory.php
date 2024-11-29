@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Board;
 use App\Models\Column;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,7 @@ class CardFactory extends Factory
             'text' => $this->faker->text,
             'board_id' => Board::factory(),
             'column_id' => Column::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }

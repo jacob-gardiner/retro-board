@@ -39,7 +39,7 @@ class BoardController extends Controller
     {
         Gate::authorize('view', $board);
 
-        $board->load('columns.cards.user');
+        $board->load(['columns.cards.user', 'columns.cards.votes']);
 
         return Inertia::render('Boards/BoardView', [
             'board' => BoardResource::make($board),
