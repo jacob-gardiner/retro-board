@@ -1,14 +1,10 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/vue3';
-import { reactive, ref } from 'vue';
 
-import FormSection from '@/Components/FormSection.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import Modal from '@/Components/Modal.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SectionTitle from '@/Components/SectionTitle.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 defineProps({ show: Boolean });
