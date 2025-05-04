@@ -46,35 +46,6 @@ const board = {
   columns: [],
 };
 describe('BoardTimer', () => {
-  // it('updates the board when the start button is clicked', async () => {
-  //   const form = useForm({});
-  //
-  //   const wrapper = mount(BoardTimer, {
-  //     props: {
-  //       board,
-  //     },
-  //   });
-  //
-  //   // start the timer
-  //   await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
-  //   console.log(form);
-  //
-  //   expect(form.put).toHaveBeenCalledWith(
-  //     `/boards/${board.id}`,
-  //     expect.anything(),
-  //   );
-  //   expect(wrapper.find('[data-testid=pause-icon]').exists()).toBeTruthy();
-  //   expect(wrapper.find('[data-testid=play-icon]').exists()).toBeFalsy();
-  //
-  //   // stop the timer
-  //   await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
-  //   expect(form.put).toHaveBeenCalledTimes(2);
-  //   expect(wrapper.find('[data-testid=play-icon]').exists()).toBeTruthy();
-  //   expect(wrapper.find('[data-testid=pause-icon]').exists()).toBeFalsy();
-  //
-  //   // TODO: add assertions for invoking functions from useTimeoutPoll
-  // });
-
   it('updates the board when the start button is clicked', async () => {
     const form = useForm({});
     const { resume, pause } = useTimeoutPoll(() => {}, 1000);
@@ -120,5 +91,22 @@ describe('BoardTimer', () => {
 
   it.todo('notifys the user when the timer is done');
 
-  it.todo('resets the timer when finished');
+  it('resets the timer when finished', () => {
+    const form = useForm({});
+
+    mount(BoardTimer, {
+      props: {
+        board: {
+          ...board,
+          timer_started_at: DateTime.now().toISO(),
+          timer_duration_remaining: 0,
+        },
+      },
+    });
+
+    expect(form.put).toHaveBeenCalledWith(
+      `/boards/${board.id}`,
+      expect.anything(),
+    );
+  });
 });

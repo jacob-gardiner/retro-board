@@ -82,6 +82,18 @@ watch(
   },
   { immediate: true },
 );
+
+watch(
+  timeRemaining,
+  () => {
+    if (timeRemaining.value <= 0) {
+      // play sound
+      timeRemaining.value = props.board.timer_duration;
+      resetTimer();
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <template>
