@@ -28,6 +28,8 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
-        "@vueuse/core": "^10.11.0"
+        "@vueuse/core": "^10.11.0",
+        "lucide-vue-next": "^0.503.0",
+        "luxon": "^3.6.1"
     }
 }

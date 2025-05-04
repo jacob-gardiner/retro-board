@@ -5,3 +5,8 @@
 [x-cloak] {
     display: none;
 }
+
+.lucide {
+    /* TODO: is this ugly? */
+    stroke-width: 3px;
+}

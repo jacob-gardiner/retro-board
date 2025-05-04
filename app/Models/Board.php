@@ -11,6 +11,10 @@ class Board extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'timer_started_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
     public function team()
     {
         return $this->belongsTo(Team::class);

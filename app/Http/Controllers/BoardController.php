@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BoardUpdated;
 use App\Http\Requests\Boards\StoreBoardRequest;
+use App\Http\Requests\Boards\UpdateBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Models\Board;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Nette\NotImplementedException;
 
@@ -51,9 +55,13 @@ class BoardController extends Controller
         throw new NotImplementedException;
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateBoardRequest $request, Board $board)
     {
-        throw new NotImplementedException;
+        Gate::authorize('update', $board);
+
+        $board->update($request->validated());
+
+        BoardUpdated::dispatch($board);
     }
 
     public function destroy(string $id)
