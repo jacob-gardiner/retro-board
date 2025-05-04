@@ -15,11 +15,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        sans: ['Plus Jakarta Sans', ...defaultTheme.fontFamily.sans],
       },
       colors: ({ colors }) => ({
         white: '#FAF9F7',
-        // white: '#FFFAF7',
         whitest: '#FFFFFF',
         peach: {
           50: '#FFF8F5',
@@ -46,16 +45,16 @@ export default {
           900: '#306E6D',
         },
         gray: {
-          50: '#FDFBFA', // very subtle off-white
-          100: '#F8F4F2', // UI backgrounds, subtle fills
-          200: '#EDE8E6', // borders, dividers
-          300: '#DDD6D3', // muted text, outlines
-          400: '#C2BAB7', // secondary text
-          500: '#A89F9B', // neutral text
-          600: '#8D8480', // active UI, headings
-          700: '#726864', // strong UI text
-          800: '#574E4A', // stronger contrast (headings, bold)
-          900: '#3C3430', // highest contrast, primary text
+          50: '#FDFBFA',
+          100: '#F8F4F2',
+          200: '#EDE8E6',
+          300: '#DDD6D3',
+          400: '#C2BAB7',
+          500: '#A89F9B',
+          600: '#8D8480',
+          700: '#726864',
+          800: '#574E4A',
+          900: '#3C3430',
         },
         red: {
           50: '#fef8f8',
@@ -63,7 +62,7 @@ export default {
           200: '#fbdcdc',
           300: '#f7c6c6',
           400: '#f3adad',
-          500: '#e99a9a', // Very soft, muted pastel red
+          500: '#e99a9a',
           600: '#d88484',
           700: '#bf6f6f',
           800: '#a85e5e',
@@ -75,7 +74,7 @@ export default {
           200: '#ffe3d1',
           300: '#ffd0b3',
           400: '#fcbf99',
-          500: '#f2a985', // Soft pastel orange / apricot
+          500: '#f2a985',
           600: '#e19572',
           700: '#c57e5d',
           800: '#a7684c',
@@ -87,7 +86,7 @@ export default {
           200: '#ffebbe',
           300: '#ffe09c',
           400: '#ffd27c',
-          500: '#f4be61', // Soft pastel amber / muted golden yellow
+          500: '#f4be61',
           600: '#e0a851',
           700: '#c19144',
           800: '#a47a3a',
@@ -99,7 +98,7 @@ export default {
           200: '#fff6c7',
           300: '#ffeea3',
           400: '#ffe57e',
-          500: '#f8d867', // Soft pastel yellow / buttercream
+          500: '#f8d867',
           600: '#e4c255',
           700: '#c7a947',
           800: '#a8903c',
@@ -111,7 +110,7 @@ export default {
           200: '#e4f5c4',
           300: '#d2eda0',
           400: '#bedf80',
-          500: '#a7cd68', // Soft pastel lime / pistachio green
+          500: '#a7cd68',
           600: '#92b85a',
           700: '#7b9f4d',
           800: '#678643',
@@ -123,7 +122,7 @@ export default {
           200: '#d2f1df',
           300: '#b8e6cc',
           400: '#9fd9b7',
-          500: '#86caa2', // Soft sage / pastel green
+          500: '#86caa2',
           600: '#73b390',
           700: '#60997b',
           800: '#507f68',
@@ -135,7 +134,7 @@ export default {
           200: '#c7ecdf',
           300: '#a6e0cc',
           400: '#87d2b7',
-          500: '#6bc3a3', // Soft pastel emerald / jade
+          500: '#6bc3a3',
           600: '#59af91',
           700: '#49997c',
           800: '#3c8169',
@@ -147,7 +146,7 @@ export default {
           200: '#c4efee',
           300: '#a3e3e1',
           400: '#83d3d2',
-          500: '#6ac2c1', // Soft pastel teal / ocean mist
+          500: '#6ac2c1',
           600: '#58adae',
           700: '#489797',
           800: '#3b7f7f',

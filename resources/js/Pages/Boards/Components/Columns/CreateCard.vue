@@ -24,7 +24,7 @@ const submit = () => {
 
 <template>
   <div
-    class="bottom-0 bg-white p-3 border-t-2 border-primary-700 rounded-t-lg w-11/12 h-20"
+    class="bottom-0 bg-white p-3 border-t-2 border-primary-700 rounded-t-lg w-11/12 h-20 shadow-md"
   >
     <form @submit.prevent="submit">
       <TextInput

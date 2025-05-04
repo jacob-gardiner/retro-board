@@ -21,7 +21,7 @@ const showModal = ref(false);
     <div class="pt-3 max-w-7xl mx-auto sm:px-6 lg:px-8" v-if="boards.length">
       <button
         type="button"
-        class="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+        class="rounded-md bg-primary-700 px-3 py-2 text-sm font-semibold text-primary-50 shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
         @click="() => (showModal = true)"
       >
         Create a board
@@ -36,7 +36,7 @@ const showModal = ref(false);
       <div class="flex justify-center pt-3">
         <button
           type="button"
-          class="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+          class="rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-primary-50 shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
           @click="() => (showModal = !showModal)"
         >
           Create a board
@@ -48,7 +48,7 @@ const showModal = ref(false);
     >
       <div v-for="board in boards" :key="board.id" class="">
         <Link :href="`/boards/${board.id}`">
-          <Card>
+          <Card class="hover:shadow-lg">
             <div class="truncate">{{ board.title }}</div>
             <span class="text-xs text-gray-500"
               >Created {{ board.created_diff_for_humans }}</span
