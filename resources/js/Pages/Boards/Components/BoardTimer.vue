@@ -1,9 +1,12 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { useTimeoutPoll } from '@vueuse/core';
+import { useSound } from '@vueuse/sound';
 import { Pause, Play, RotateCcw } from 'lucide-vue-next';
 import { DateTime } from 'luxon';
 import { computed, ref, watch } from 'vue';
+
+import timerFinishedSound from '../../../../sounds/vinyl-rewind.mp3';
 
 const props = defineProps({ board: Object });
 
@@ -11,6 +14,7 @@ const timeRemaining = ref(props.board.timer_duration_remaining);
 const isPaused = computed(() => {
   return !props.board.timer_started_at;
 });
+const { play } = useSound(timerFinishedSound);
 
 watch(
   () => `${props.board.timer_duration_remaining}`,
@@ -87,7 +91,7 @@ watch(
   timeRemaining,
   () => {
     if (timeRemaining.value <= 0) {
-      // play sound
+      play();
       timeRemaining.value = props.board.timer_duration;
       resetTimer();
     }

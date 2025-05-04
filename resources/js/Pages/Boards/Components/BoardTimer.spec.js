@@ -1,10 +1,12 @@
 import { useForm } from '@inertiajs/vue3';
 import { mount } from '@vue/test-utils';
 import { useTimeoutPoll } from '@vueuse/core';
+import { useSound } from '@vueuse/sound';
 import { DateTime } from 'luxon';
-import { nextTick } from 'vue';
 
 import BoardTimer from '@/Pages/Boards/Components/BoardTimer.vue';
+
+import timerFinishedSound from '../../../../sounds/vinyl-rewind.mp3';
 
 vi.mock('@inertiajs/vue3', () => {
   const put = vi.fn();
@@ -18,6 +20,7 @@ vi.mock('@inertiajs/vue3', () => {
     useForm,
   };
 });
+
 vi.mock('@vueuse/core', () => {
   const pause = vi.fn();
   const resume = vi.fn();
@@ -29,6 +32,18 @@ vi.mock('@vueuse/core', () => {
 
   return {
     useTimeoutPoll,
+  };
+});
+
+vi.mock('@vueuse/sound', () => {
+  const play = vi.fn();
+  const useSound = vi.fn().mockImplementation((args) => ({
+    ...args,
+    play,
+  }));
+
+  return {
+    useSound,
   };
 });
 
@@ -48,7 +63,7 @@ const board = {
 describe('BoardTimer', () => {
   it('updates the board when the start button is clicked', async () => {
     const form = useForm({});
-    const { resume, pause } = useTimeoutPoll(() => {}, 1000);
+    const { resume } = useTimeoutPoll(() => {}, 1000);
 
     const wrapper = mount(BoardTimer, {
       props: {
@@ -89,7 +104,21 @@ describe('BoardTimer', () => {
     expect(form.put).toHaveBeenCalledWith(`/boards/${board.id}`);
   });
 
-  it.todo('notifys the user when the timer is done');
+  it('plays a sound when the timer is done', () => {
+    const { play } = useSound(timerFinishedSound);
+
+    mount(BoardTimer, {
+      props: {
+        board: {
+          ...board,
+          timer_started_at: DateTime.now().toISO(),
+          timer_duration_remaining: 0,
+        },
+      },
+    });
+
+    expect(play).toHaveBeenCalled();
+  });
 
   it('resets the timer when finished', () => {
     const form = useForm({});
