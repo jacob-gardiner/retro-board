@@ -9,7 +9,6 @@ class BoardResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-//        dd($this->resource->timer_started_at);
         return [
             'id' => $this->resource->id,
             'team_id' => $this->resource->team_id,

@@ -50,6 +50,7 @@ const resetTimer = () => {
     },
   });
 };
+
 const timerClick = () => {
   if (isPaused.value) {
     form.timer_started_at = DateTime.now().toISO();
@@ -80,9 +81,9 @@ watch(
 
     if (currentlyPaused) {
       pause();
-    } else {
-      resume();
+      return;
     }
+    resume();
   },
   { immediate: true },
 );

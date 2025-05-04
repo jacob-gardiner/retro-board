@@ -16,10 +16,7 @@ Echo.private(`boards.${board.id}`).listen('ColumnCreated', reloadBoard);
 Echo.private(`boards.${board.id}`).listen('ColumnUpdated', reloadBoard);
 Echo.private(`boards.${board.id}`).listen('CardCreated', reloadBoard);
 Echo.private(`boards.${board.id}`).listen('CardUpdated', reloadBoard);
-Echo.private(`boards.${board.id}`).listen('BoardUpdated', () => {
-  console.log('board updated');
-  reloadBoard();
-});
+Echo.private(`boards.${board.id}`).listen('BoardUpdated', reloadBoard);
 Echo.private(`boards.${board.id}`).listen('VoteCreated', reloadBoard);
 </script>
 

@@ -60,6 +60,7 @@ const board = {
   updated_at: '2025-04-25T15:31:48.000000Z',
   columns: [],
 };
+
 describe('BoardTimer', () => {
   it('updates the board when the start button is clicked', async () => {
     const form = useForm({});

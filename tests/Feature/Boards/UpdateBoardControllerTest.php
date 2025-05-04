@@ -11,7 +11,7 @@ class UpdateBoardControllerTest extends TestCase
     #[Test]
     public function it_can_update_a_board()
     {
-        $user = User::factory()->withPersonalTeam(fn($team) => $team->hasBoards(1))->create();
+        $user = User::factory()->withPersonalTeam(fn ($team) => $team->hasBoards(1))->create();
         $board = $user->currentTeam->boards->first();
 
         $expected = [
@@ -26,14 +26,14 @@ class UpdateBoardControllerTest extends TestCase
 
         $this->assertDatabaseHas('boards', [
             ...$expected,
-            'id' => $board->id
+            'id' => $board->id,
         ]);
     }
 
     #[Test]
     public function it_is_inaccessible_to_guests()
     {
-        $user = User::factory()->withPersonalTeam(fn($team) => $team->hasBoards(1))->create();
+        $user = User::factory()->withPersonalTeam(fn ($team) => $team->hasBoards(1))->create();
         $board = $user->currentTeam->boards->first();
 
         $expected = [
