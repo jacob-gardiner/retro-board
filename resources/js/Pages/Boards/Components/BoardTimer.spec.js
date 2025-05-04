@@ -1,10 +1,10 @@
 import { useForm } from '@inertiajs/vue3';
-import { flushPromises, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { useTimeoutPoll } from '@vueuse/core';
+import { DateTime } from 'luxon';
 import { nextTick } from 'vue';
 
 import BoardTimer from '@/Pages/Boards/Components/BoardTimer.vue';
-import CreateColumn from '@/Pages/Boards/Components/Columns/CreateColumn.vue';
 
 vi.mock('@inertiajs/vue3', () => {
   const put = vi.fn();
@@ -16,6 +16,19 @@ vi.mock('@inertiajs/vue3', () => {
 
   return {
     useForm,
+  };
+});
+vi.mock('@vueuse/core', () => {
+  const pause = vi.fn();
+  const resume = vi.fn();
+  const useTimeoutPoll = vi.fn().mockImplementation((args) => ({
+    ...args,
+    pause,
+    resume,
+  }));
+
+  return {
+    useTimeoutPoll,
   };
 });
 
@@ -33,35 +46,77 @@ const board = {
   columns: [],
 };
 describe('BoardTimer', () => {
-  it('can start and stop the timer', async () => {
+  // it('updates the board when the start button is clicked', async () => {
+  //   const form = useForm({});
+  //
+  //   const wrapper = mount(BoardTimer, {
+  //     props: {
+  //       board,
+  //     },
+  //   });
+  //
+  //   // start the timer
+  //   await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
+  //   console.log(form);
+  //
+  //   expect(form.put).toHaveBeenCalledWith(
+  //     `/boards/${board.id}`,
+  //     expect.anything(),
+  //   );
+  //   expect(wrapper.find('[data-testid=pause-icon]').exists()).toBeTruthy();
+  //   expect(wrapper.find('[data-testid=play-icon]').exists()).toBeFalsy();
+  //
+  //   // stop the timer
+  //   await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
+  //   expect(form.put).toHaveBeenCalledTimes(2);
+  //   expect(wrapper.find('[data-testid=play-icon]').exists()).toBeTruthy();
+  //   expect(wrapper.find('[data-testid=pause-icon]').exists()).toBeFalsy();
+  //
+  //   // TODO: add assertions for invoking functions from useTimeoutPoll
+  // });
+
+  it('updates the board when the start button is clicked', async () => {
     const form = useForm({});
+    const { resume, pause } = useTimeoutPoll(() => {}, 1000);
 
     const wrapper = mount(BoardTimer, {
       props: {
         board,
       },
     });
+    expect(resume).toHaveBeenCalledTimes(0);
 
-    // start the timer
-    await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
-
-    expect(form.put).toHaveBeenCalledWith(
-      `/boards/${board.id}`,
-      expect.anything(),
-    );
-    expect(wrapper.find('[data-testid=pause-icon]').exists()).toBeTruthy();
-    expect(wrapper.find('[data-testid=play-icon]').exists()).toBeFalsy();
-
-    // stop the timer
-    await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
-    expect(form.put).toHaveBeenCalledTimes(2);
-    expect(wrapper.find('[data-testid=play-icon]').exists()).toBeTruthy();
     expect(wrapper.find('[data-testid=pause-icon]').exists()).toBeFalsy();
+    expect(wrapper.find('[data-testid=play-icon]').exists()).toBeTruthy();
 
-    // TODO: add assertions for invoking functions from useTimeoutPoll
+    await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
+
+    expect(form.put).toHaveBeenCalledWith(`/boards/${board.id}`);
   });
 
-  it.todo('starts the countdown if the timer is already started');
+  it('starts the countdown when timer_started_at is set on the board', async () => {
+    const form = useForm({});
+    const { resume, pause } = useTimeoutPoll(() => {}, 1000);
+
+    const wrapper = mount(BoardTimer, {
+      props: {
+        board: {
+          ...board,
+          timer_started_at: DateTime.now().toISO(),
+        },
+      },
+    });
+
+    expect(wrapper.find('[data-testid=play-icon]').exists()).toBeFalsy();
+    expect(wrapper.find('[data-testid=pause-icon]').exists()).toBeTruthy();
+
+    expect(resume).toHaveBeenCalledTimes(1);
+    expect(pause).toHaveBeenCalledTimes(0);
+
+    await wrapper.find('[data-testid=toggle-timer]').trigger('submit.prevent');
+
+    expect(form.put).toHaveBeenCalledWith(`/boards/${board.id}`);
+  });
 
   it.todo('notifys the user when the timer is done');
 

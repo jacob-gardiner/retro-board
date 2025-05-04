@@ -72,7 +72,7 @@ const formattedTimeRemaining = computed(() => {
 watch(
   isPaused,
   (currentlyPaused, wasPaused) => {
-    if (wasPaused === undefined) return;
+    if (wasPaused === undefined && currentlyPaused) return;
 
     if (currentlyPaused) {
       pause();
