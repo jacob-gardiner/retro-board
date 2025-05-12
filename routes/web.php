@@ -18,10 +18,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-
     Route::resource('boards', \App\Http\Controllers\BoardController::class);
     Route::resource('boards.columns', \App\Http\Controllers\BoardColumnController::class)->only(['store', 'update']);
     Route::resource('boards.columns.cards', \App\Http\Controllers\BoardColumnCardController::class)->only(['store', 'update']);
