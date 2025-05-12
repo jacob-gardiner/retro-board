@@ -54,14 +54,14 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
         <p class="mt-4 text-sm">
           <a
             href="https://laravel.com/docs"
-            class="inline-flex items-center font-semibold text-indigo-700"
+            class="inline-flex items-center font-semibold text-primary-700"
           >
             Explore the documentation
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
-              class="ms-1 w-5 h-5 fill-indigo-500"
+              class="ms-1 w-5 h-5 fill-primary-500"
             >
               <path
                 fill-rule="evenodd"
@@ -101,14 +101,14 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
         <p class="mt-4 text-sm">
           <a
             href="https://laracasts.com"
-            class="inline-flex items-center font-semibold text-indigo-700"
+            class="inline-flex items-center font-semibold text-primary-700"
           >
             Start watching Laracasts
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
-              class="ms-1 w-5 h-5 fill-indigo-500"
+              class="ms-1 w-5 h-5 fill-primary-500"
             >
               <path
                 fill-rule="evenodd"

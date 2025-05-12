@@ -81,7 +81,7 @@ const onVote = () => {
         <div
           v-if="!isOutside"
           @click="onVote"
-          class="absolute cursor-pointer p-1.5 -right-0.5 -bottom-2 bg-green-700 hover:bg-green-600 rounded-full text-white"
+          class="absolute cursor-pointer p-1.5 -right-0.5 -bottom-2 bg-primary-700 hover:bg-primary-600 rounded-full text-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

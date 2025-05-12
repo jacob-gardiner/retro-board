@@ -103,13 +103,13 @@ watch(
 
 <template>
   <div class="flex">
-    <span class="text-xl font-bold mr-3 w-16">{{
+    <span class="text-xl font-bold mr-3 w-16 text-gray-800">{{
       formattedTimeRemaining
     }}</span>
     <form @submit.prevent="timerClick" data-testid="toggle-timer">
       <button
         type="submit"
-        class="text-indigo-950 hover:text-indigo-700 text-center h-full flex justify-center flex-col mr-2"
+        class="text-gray-800 hover:text-primary-700 text-center h-full flex justify-center flex-col mr-2"
       >
         <Play v-if="isPaused" data-testid="play-icon" :size="20" />
         <Pause v-else data-testid="pause-icon" :size="20" />
@@ -122,7 +122,7 @@ watch(
     >
       <button
         type="submit"
-        class="text-indigo-950 hover:text-indigo-700 h-full flex justify-center flex-col"
+        class="text-gray-800 hover:text-primary-700 h-full flex justify-center flex-col"
       >
         <RotateCcw data-testid="reset-icon" :size="20" />
       </button>

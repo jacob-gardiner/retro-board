@@ -19,7 +19,7 @@ watchEffect(async () => {
     <div
       v-if="show && message"
       :class="{
-        'bg-indigo-500': style == 'success',
+        'bg-primary-500': style == 'success',
         'bg-red-700': style == 'danger',
       }"
     >
@@ -29,7 +29,7 @@ watchEffect(async () => {
             <span
               class="flex p-2 rounded-lg"
               :class="{
-                'bg-indigo-600': style == 'success',
+                'bg-primary-600': style == 'success',
                 'bg-red-600': style == 'danger',
               }"
             >
@@ -76,7 +76,7 @@ watchEffect(async () => {
               type="button"
               class="-me-1 flex p-2 rounded-md focus:outline-none sm:-me-2 transition"
               :class="{
-                'hover:bg-indigo-600 focus:bg-indigo-600': style == 'success',
+                'hover:bg-primary-600 focus:bg-primary-600': style == 'success',
                 'hover:bg-red-600 focus:bg-red-600': style == 'danger',
               }"
               aria-label="Dismiss"

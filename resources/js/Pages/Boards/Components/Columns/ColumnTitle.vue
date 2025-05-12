@@ -40,7 +40,7 @@ const submit = () => {
       v-else
       @click="toggle()"
       data-testid="column-title-header"
-      class="text-2xl capitalize tracking-wider text-gray-500 px-3 font-bold hover:cursor-pointer m-1"
+      class="text-2xl capitalize tracking-wider text-gray-700 px-3 font-bold hover:cursor-pointer m-1"
     >
       {{ column.title }}
     </h3>
