@@ -20,7 +20,7 @@ class CardFactory extends Factory
     public function definition(): array
     {
         return [
-            'text' => $this->faker->text,
+            'text' => $this->faker->realTextBetween(135, 140),
             'board_id' => Board::factory(),
             'column_id' => Column::factory(),
             'user_id' => User::factory(),

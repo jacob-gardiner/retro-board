@@ -27,7 +27,6 @@ const showDropStyles = computed(() => {
 
 <template>
   <div
-    class="h-full"
     ref="dropZone"
     :data-testid="`column-${column.id}`"
     :class="{
@@ -35,7 +34,9 @@ const showDropStyles = computed(() => {
     }"
   >
     <ColumnTitle :column="column" />
-    <div class="flex flex-wrap">
+    <div
+      class="grid gap-2 grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3"
+    >
       <RetroCard
         v-for="card in column.cards"
         :key="card.id"

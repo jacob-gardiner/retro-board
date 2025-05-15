@@ -1,9 +1,9 @@
 <script setup>
-import { useElementSize } from '@vueuse/core';
 import { provide, ref } from 'vue';
 
 const el = ref(null);
-const { height } = useElementSize(el);
+
+const height = ref(window.innerHeight);
 
 provide('pageDetails', {
   height,

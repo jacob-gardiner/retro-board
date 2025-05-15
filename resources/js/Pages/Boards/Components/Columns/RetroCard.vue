@@ -53,22 +53,22 @@ const onVote = () => {
 </script>
 
 <template>
-  <div class="">
+  <div class="w-full flex justify-around">
     <div
       v-if="isDragging"
-      :class="`p-3 rounded cursor-grabbing rotate-12 fixed z-50 shadow-md mb-2 mx-2 w-28 bg-${color}-100`"
+      :class="`p-3 rounded cursor-grabbing rotate-12 fixed z-50 shadow-md mb-2 mx-2 w-48 bg-${color}-100`"
       :data-testid="`retroCard-dragging-${card.id}`"
       ref="el"
       :style="style"
     >
       <CardBody :card="card" :color="color" :name="name" />
     </div>
-    <div ref="cardInteractionZone" class="p-1">
+    <div ref="cardInteractionZone" class="">
       <div class="relative">
         <div
-          @mousedown="dragStart"
+          @mousedown.left="dragStart"
           :data-testid="`retroCard-${card.id}`"
-          :class="`p-3 rounded shadow cursor-grab mb-2 mx-2 w-28  ${isDragging ? `shadow-inner opacity-75 backdrop-blur-md bg-${color}-100/30` : `bg-${color}-100`}`"
+          :class="`p-2 rounded shadow cursor-grab w-48  ${isDragging ? `shadow-inner opacity-75 backdrop-blur-md bg-${color}-100/30` : `bg-${color}-100`}`"
         >
           <CardBody :card="card" :color="color" :name="name" />
           <div class="grid grid-cols-2">
