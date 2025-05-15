@@ -1,6 +1,5 @@
 <script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
-import { useElementSize } from '@vueuse/core';
 import { provide, ref } from 'vue';
 
 import ApplicationMark from '@/Components/ApplicationMark.vue';
@@ -17,7 +16,8 @@ defineProps({
 const showingNavigationDropdown = ref(false);
 const el = ref(null);
 
-const { height: contentHeight } = useElementSize(el);
+const contentHeight = ref(window.innerHeight);
+
 const switchToTeam = (team) => {
   router.put(
     route('current-team.update'),
