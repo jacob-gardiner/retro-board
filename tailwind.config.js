@@ -20,7 +20,7 @@ export default {
       colors: ({ colors }) => ({
         white: '#FAF9F7',
         whitest: '#FFFFFF',
-        peach: {
+        secondary: {
           50: '#FFF8F5',
           100: '#FFF0E8',
           200: '#FFE0D1',
