@@ -28,7 +28,7 @@ const showModal = ref(false);
       </button>
     </div>
     <div class="" v-if="!boards.length">
-      <div class="flex justify-center">
+      <div class="flex justify-center pt-8">
         <p class="text-lg">
           Uh oh...looks like you don't have any retro boards yet!
         </p>
