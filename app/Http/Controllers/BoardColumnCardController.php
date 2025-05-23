@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\CardCreated;
+use App\Events\CardDeleted;
 use App\Events\CardUpdated;
 use App\Http\Requests\Cards\StoreCardRequest;
 use App\Http\Requests\Cards\UpdateCardRequest;
@@ -38,5 +39,14 @@ class BoardColumnCardController extends Controller
         ]);
 
         CardUpdated::dispatch($column->board);
+    }
+
+    public function destroy(Board $board, Column $column, Card $card)
+    {
+        Gate::authorize('delete', $card);
+
+        $card->delete();
+
+        CardDeleted::dispatch($column->board);
     }
 }

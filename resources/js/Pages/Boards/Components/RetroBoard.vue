@@ -22,7 +22,7 @@ const boardHeight = computed(() => {
         <div
           v-for="column in board.columns"
           :style="`max-height: ${boardHeight - 15}px; min-height: ${boardHeight - 15}px`"
-          class="overflow-y-auto h-full border-r-4 border-dashed column flex flex-col justify-between min-[1900px]:min-w-[33.3333vw] xl:min-w-[700px] lg:min-w-[50vw] md:min-w-[50vw] min-w-full"
+          class="overflow-y-auto border-r-4 border-dashed column flex flex-col justify-between min-[1900px]:min-w-[33.3333vw] xl:min-w-[700px] lg:min-w-[50vw] md:min-w-[50vw] min-w-full"
         >
           <Column :column="column" />
           <div class="sticky bottom-0 z-50 w-full flex justify-around">

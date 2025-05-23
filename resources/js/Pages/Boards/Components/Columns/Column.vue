@@ -29,6 +29,7 @@ const showDropStyles = computed(() => {
   <div
     ref="dropZone"
     :data-testid="`column-${column.id}`"
+    class="h-full"
     :class="{
       'opacity-50 bg-gray-50': showDropStyles,
     }"
