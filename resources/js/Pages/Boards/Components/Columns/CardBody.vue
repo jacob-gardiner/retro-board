@@ -1,12 +1,53 @@
 <script setup>
-defineProps({ card: Object, color: String, name: String });
+import { useForm } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
+
+const props = defineProps({
+  card: Object,
+  color: String,
+  name: String,
+  editing: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const wrapper = ref(null);
+
+const classes = computed(() => {
+  return `text-${props.color}-900 font-bold max-h-44 h-44 text-ellipsis text-balance text-base`;
+});
+const emit = defineEmits(['stopEditing']);
+
+const editForm = useForm({
+  column_id: props.card.column_id,
+  text: props.card.text,
+});
+
+const vFocus = {
+  mounted: (el) => el.focus(),
+};
+const update = (value) => {
+  console.log('updating');
+  editForm.patch(
+    `/boards/${props.card.board_id}/columns/${props.card.column_id}/cards/${props.card.id}`,
+  );
+  emit('stopEditing');
+};
 </script>
 
 <template>
-  <div
-    :class="`text-${color}-900 font-bold max-h-44 h-44 text-ellipsis text-balance text-base`"
-  >
-    {{ card.text }}
+  <div ref="wrapper">
+    <div v-if="!editing" :class="classes">
+      {{ card.text }}
+    </div>
+    <textarea
+      v-else
+      v-focus
+      @focusout="update"
+      v-model="editForm.text"
+      :class="`${classes} bg-transparent max-w-full border-none resize-none outline-hidden focus:ring-0 p-0`"
+    />
   </div>
 </template>
 

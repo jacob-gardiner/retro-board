@@ -36,6 +36,7 @@ class BoardColumnCardController extends Controller
 
         $card->update([
             'column_id' => $request->validated('column_id'),
+            'text' => $request->validated('text'),
         ]);
 
         CardUpdated::dispatch($column->board);

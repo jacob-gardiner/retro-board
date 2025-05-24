@@ -13,12 +13,14 @@ export const useBoardInteractions = () => {
   };
   const form = useForm({
     column_id: draggingCard.value?.column_id,
+    text: draggingCard.value?.text,
   });
 
   const dropCard = () => {
     if (!focusedColumn.value?.id) return;
 
     form.column_id = focusedColumn.value.id;
+    form.text = draggingCard.value.text;
 
     form.patch(
       `/boards/${draggingCard.value?.board_id}/columns/${draggingCard.value?.column_id}/cards/${draggingCard.value?.id}`,

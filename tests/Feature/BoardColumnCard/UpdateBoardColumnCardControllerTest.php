@@ -15,7 +15,8 @@ class UpdateBoardColumnCardControllerTest extends TestCase
 {
     private string $route = 'boards.columns.cards.update';
 
-    public function test_it_can_update_the_cards_column()
+    #[Test]
+    public function it_can_update_the_cards_column()
     {
         Event::fake();
         $team = Team::factory()->create();
@@ -49,6 +50,44 @@ class UpdateBoardColumnCardControllerTest extends TestCase
         $this->assertDatabaseHas('cards', [
             'id' => $card->id,
             'column_id' => $targetColumn->id,
+        ]);
+    }
+
+    #[Test]
+    public function it_can_update_the_cards_text()
+    {
+        Event::fake();
+        $team = Team::factory()->create();
+        $user = User::factory()->create([
+            'current_team_id' => $team->id,
+        ]);
+        $board = Board::factory()
+            ->hasColumns(2)
+            ->create([
+                'team_id' => $user->current_team_id,
+            ]);
+        $column = $board->columns->first();
+        $updatedText = 'Some updated text';
+        $card = Card::factory()->create([
+            'text' => 'A happy little card',
+            'board_id' => $board->id,
+            'column_id' => $column->id,
+            'user_id' => $user->id,
+        ]);
+
+        $this->actingAs($user)
+            ->patchJson(route($this->route, [
+                'board' => $board->id,
+                'column' => $column->id,
+                'card' => $card->id,
+            ]), ['column_id' => $column->id, 'text' => $updatedText])
+            ->assertOk();
+
+        Event::assertDispatched(CardUpdated::class);
+
+        $this->assertDatabaseHas('cards', [
+            'id' => $card->id,
+            'text' => $updatedText,
         ]);
     }
 
