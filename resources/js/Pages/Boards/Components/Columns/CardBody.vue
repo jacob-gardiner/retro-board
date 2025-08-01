@@ -5,7 +5,6 @@ import { computed, ref } from 'vue';
 const props = defineProps({
   card: Object,
   color: String,
-  name: String,
   editing: {
     type: Boolean,
     default: false,
@@ -28,7 +27,6 @@ const vFocus = {
   mounted: (el) => el.focus(),
 };
 const update = (value) => {
-  console.log('updating');
   editForm.patch(
     `/boards/${props.card.board_id}/columns/${props.card.column_id}/cards/${props.card.id}`,
   );
@@ -38,10 +36,11 @@ const update = (value) => {
 
 <template>
   <div ref="wrapper">
-    <div v-if="!editing" :class="classes">
+    <div v-if="!editing" :class="classes" data-testid="card-body-content">
       {{ card.text }}
     </div>
     <textarea
+      data-testid="card-body-textarea"
       v-else
       v-focus
       @focusout="update"
