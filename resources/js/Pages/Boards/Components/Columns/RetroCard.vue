@@ -1,7 +1,7 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { useMouseInElement, usePointer } from '@vueuse/core';
-import { ThumbsUp, X } from 'lucide-vue-next';
+import { Edit, ThumbsUp, X } from 'lucide-vue-next';
 import { inject, ref, watch } from 'vue';
 
 import CardBody from '@/Pages/Boards/Components/Columns/CardBody.vue';
@@ -9,6 +9,7 @@ import CardBody from '@/Pages/Boards/Components/Columns/CardBody.vue';
 const props = defineProps({ card: Object, color: String, name: String });
 
 const isDragging = ref(false);
+const editing = ref(false);
 const el = ref(null);
 const cardInteractionZone = ref(null);
 const style = ref({ left: `0px`, top: `0px` });
@@ -36,6 +37,9 @@ watch([pointerX, pointerY, pressure], () => {
 });
 
 const dragStart = () => {
+  if (editing.value) {
+    return;
+  }
   isDragging.value = true;
   updateDraggingCard(props.card);
 };
@@ -81,9 +85,15 @@ const onDelete = () => {
         <div
           @mousedown.left="dragStart"
           :data-testid="`retroCard-${card.id}`"
-          :class="`p-2 rounded shadow cursor-grab w-48  ${isDragging ? `shadow-inner opacity-75 backdrop-blur-md bg-${color}-100/30` : `bg-${color}-100`}`"
+          :class="`p-2 rounded shadow ${editing ? 'font-black' : 'cursor-grab'} w-48  ${isDragging ? `shadow-inner opacity-75 backdrop-blur-md bg-${color}-100/30` : `bg-${color}-100`}`"
         >
-          <CardBody :card="card" :color="color" :name="name" />
+          <CardBody
+            :card="card"
+            :color="color"
+            :name="name"
+            :editing="editing"
+            @stopEditing="editing = false"
+          />
           <div class="grid grid-cols-2">
             <span :class="`text-xs w-full text-${color}-700`">{{ name }}</span>
             <span :class="`text-${color}-900 w-full text-right`">{{
@@ -91,19 +101,28 @@ const onDelete = () => {
             }}</span>
           </div>
         </div>
-        <div
-          v-if="!isOutside"
-          @click="onVote"
-          class="absolute cursor-pointer p-2 -right-1.5 -bottom-1.5 bg-primary-700 hover:bg-primary-600 rounded-full text-white"
-        >
-          <ThumbsUp size="22" />
-        </div>
-        <div
-          v-if="!isOutside && $page.props.auth.user.id === card.user.id"
-          @click="onDelete"
-          class="absolute cursor-pointer p-2 -right-1.5 -top-1.5 bg-red-700 hover:bg-red-600 rounded-full text-white"
-        >
-          <X size="22" />
+        <div v-if="!editing">
+          <div
+            v-if="!isOutside"
+            @click="onVote"
+            class="absolute cursor-pointer p-2 -right-1.5 -bottom-1.5 bg-primary-700 hover:bg-primary-600 rounded-full text-white"
+          >
+            <ThumbsUp size="22" />
+          </div>
+          <div
+            v-if="!isOutside && $page.props.auth.user.id === card.user.id"
+            @click="editing = true"
+            class="absolute cursor-pointer p-2 -right-1.5 top-10 bg-gray-300 hover:bg-gray-400 rounded-full text-gray-900"
+          >
+            <Edit size="22" />
+          </div>
+          <div
+            v-if="!isOutside && $page.props.auth.user.id === card.user.id"
+            @click="onDelete"
+            class="absolute cursor-pointer p-2 -right-1.5 -top-1.5 bg-red-700 hover:bg-red-600 rounded-full text-white"
+          >
+            <X size="22" />
+          </div>
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ class UpdateCardRequest extends FormRequest
     {
         return [
             'column_id' => 'required|integer',
+            'text' => 'required|string|min:3|max:140',
         ];
     }
 }
