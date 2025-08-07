@@ -23,9 +23,6 @@ const editForm = useForm({
   text: props.card.text,
 });
 
-const vFocus = {
-  mounted: (el) => el.focus(),
-};
 const update = (value) => {
   editForm.patch(
     `/boards/${props.card.board_id}/columns/${props.card.column_id}/cards/${props.card.id}`,
