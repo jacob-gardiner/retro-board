@@ -1,0 +1,147 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Validate Formatting and Tests
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: laravel
+          MYSQL_USER: sail
+          MYSQL_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          coverage: none
+          tools: composer:v2
+          extensions: mbstring, intl, pdo_mysql, bcmath, fileinfo
+
+      - name: Install Composer dependencies (cached)
+        uses: ramsey/composer-install@v3
+        with:
+          composer-options: --no-ansi --no-interaction --no-progress --prefer-dist
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --ansi
+
+      - name: Build JS
+        run: npm run build
+
+      - name: Configure DB for tests
+        run: |
+          php -r 'file_put_contents(".env", preg_replace([
+              "/^DB_CONNECTION=.*/m",
+              "/^DB_HOST=.*/m",
+              "/^DB_PORT=.*/m",
+              "/^DB_DATABASE=.*/m",
+              "/^DB_USERNAME=.*/m",
+              "/^DB_PASSWORD=.*/m",
+          ], [
+              "DB_CONNECTION=mysql",
+              "DB_HOST=127.0.0.1",
+              "DB_PORT=3306",
+              "DB_DATABASE=laravel",
+              "DB_USERNAME=root",
+              "DB_PASSWORD=",
+          ], file_get_contents(".env")));'
+
+      - name: Wait for MySQL
+        run: |
+          for i in {1..20}; do
+            if mysqladmin ping -h 127.0.0.1 -u root --silent; then
+              echo "MySQL is ready"; break
+            fi
+            echo "Waiting for MySQL... ($i)"; sleep 3
+          done
+
+      - name: Run migrations
+        run: php artisan migrate --no-interaction -vvv
+
+      - name: PHP formatting (Pint --test)
+        run: |
+          if [ -x "vendor/bin/pint" ]; then
+            vendor/bin/pint --test
+          else
+            echo "Laravel Pint not found in vendor/bin. Please require laravel/pint as a dev dependency."; exit 1
+          fi
+
+      - name: Run PHPUnit
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: laravel
+          DB_USERNAME: root
+          DB_PASSWORD: ''
+          QUEUE_CONNECTION: redis
+          REDIS_HOST: 127.0.0.1
+          REDIS_PORT: 6379
+        run: php artisan test
+
+      - name: Prettier (check)
+        run: npx prettier --check "resources/js/**/*"
+
+      - name: Run JS tests (Vitest)
+        run: npx vitest run --coverage
