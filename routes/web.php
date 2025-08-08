@@ -17,8 +17,8 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-    Route::resource('boards', \App\Http\Controllers\BoardController::class);
+])->scopeBindings()->group(function () {
+    Route::resource('boards', \App\Http\Controllers\BoardController::class)->only(['index', 'show', 'store', 'update']);
     Route::resource('boards.columns', \App\Http\Controllers\BoardColumnController::class)->only(['store', 'update']);
     Route::resource('boards.columns.cards', \App\Http\Controllers\BoardColumnCardController::class)->only(['store', 'update', 'destroy']);
     Route::resource('cards.votes', \App\Http\Controllers\CardVoteController::class)->only(['store']);

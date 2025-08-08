@@ -35,7 +35,7 @@ class UpdateBoardColumnControllerTest extends TestCase
                 'board' => $board->id,
                 'column' => $column->id,
             ]), ['title' => $expected['title']])
-            ->assertOk();
+            ->assertNoContent();
 
         $this->assertDatabaseHas('columns', $expected);
     }

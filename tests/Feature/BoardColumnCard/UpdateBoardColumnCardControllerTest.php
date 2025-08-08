@@ -42,7 +42,7 @@ class UpdateBoardColumnCardControllerTest extends TestCase
                 'board' => $board->id,
                 'column' => $column->id,
                 'card' => $card->id,
-            ]), ['column_id' => $targetColumn->id])
+            ]), ['column_id' => $targetColumn->id, 'text' => 'Some updated text'])
             ->assertOk();
 
         Event::assertDispatched(CardUpdated::class);
@@ -115,7 +115,7 @@ class UpdateBoardColumnCardControllerTest extends TestCase
                 'board' => $board->id,
                 'column' => $column->id,
                 'card' => $card->id,
-            ]), ['column_id' => $targetColumn->id])
+            ]), ['column_id' => $targetColumn->id, 'text' => 'Some updated text'])
             ->assertNotFound();
 
         $this->assertDatabaseMissing('cards', [

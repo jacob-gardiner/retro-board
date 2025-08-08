@@ -6,6 +6,7 @@ use App\Events\VoteCreated;
 use App\Models\Card;
 use App\Models\Vote;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class CardVoteController extends Controller
 {
@@ -19,5 +20,7 @@ class CardVoteController extends Controller
         ]);
 
         VoteCreated::dispatch($card->board);
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

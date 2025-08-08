@@ -44,7 +44,7 @@ class DestroyBoardColumnCardControllerTest extends TestCase
                 'column' => $column->id,
                 'card' => $card->id,
             ]))
-            ->assertOk();
+            ->assertNoContent();
 
         Event::assertDispatched(CardDeleted::class);
 

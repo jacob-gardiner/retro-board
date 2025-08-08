@@ -11,6 +11,7 @@ use App\Models\Board;
 use App\Models\Card;
 use App\Models\Column;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class BoardColumnCardController extends Controller
 {
@@ -49,5 +50,7 @@ class BoardColumnCardController extends Controller
         $card->delete();
 
         CardDeleted::dispatch($column->board);
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

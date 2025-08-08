@@ -30,7 +30,7 @@ class StoreBoardColumnControllerTest extends TestCase
             ->postJson(route('boards.columns.store', [
                 'board' => $board->id,
             ]), ['title' => $expected['title']])
-            ->assertOk();
+            ->assertNoContent();
 
         $this->assertDatabaseHas('columns', $expected);
     }

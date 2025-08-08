@@ -8,6 +8,7 @@ use App\Http\Requests\Columns\UpdateColumnRequest;
 use App\Models\Board;
 use App\Models\Column;
 use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class BoardColumnController extends Controller
 {
@@ -21,6 +22,8 @@ class BoardColumnController extends Controller
         ]);
 
         ColumnCreated::dispatch($board);
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function update(UpdateColumnRequest $request, Board $board, Column $column)
@@ -30,5 +33,7 @@ class BoardColumnController extends Controller
         $column->update([
             'title' => $request->title,
         ]);
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

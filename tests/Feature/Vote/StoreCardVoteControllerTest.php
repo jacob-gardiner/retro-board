@@ -38,7 +38,7 @@ class StoreCardVoteControllerTest extends TestCase
 
         $this->actingAs($user)
             ->post(route($this->route, $card))
-            ->assertOk();
+            ->assertNoContent();
 
         Event::assertDispatched(VoteCreated::class);
 
