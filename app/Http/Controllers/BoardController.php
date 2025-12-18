@@ -9,7 +9,6 @@ use App\Http\Resources\BoardResource;
 use App\Models\Board;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
-use Nette\NotImplementedException;
 
 class BoardController extends Controller
 {
@@ -18,11 +17,6 @@ class BoardController extends Controller
         return Inertia::render('Boards/BoardList', [
             'boards' => BoardResource::collection(auth()->user()->currentTeam->boards)->toArray(request()),
         ]);
-    }
-
-    public function create()
-    {
-        throw new NotImplementedException;
     }
 
     public function store(StoreBoardRequest $request)
@@ -47,11 +41,6 @@ class BoardController extends Controller
         ]);
     }
 
-    public function edit(string $id)
-    {
-        throw new NotImplementedException;
-    }
-
     public function update(UpdateBoardRequest $request, Board $board)
     {
         Gate::authorize('update', $board);
@@ -59,10 +48,5 @@ class BoardController extends Controller
         $board->update($request->validated());
 
         BoardUpdated::dispatch($board);
-    }
-
-    public function destroy(string $id)
-    {
-        throw new NotImplementedException;
     }
 }

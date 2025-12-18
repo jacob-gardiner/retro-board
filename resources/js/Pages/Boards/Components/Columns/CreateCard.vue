@@ -33,7 +33,7 @@ const submit = () => {
         rows="3"
         placeholder="Enter text here"
         minlength="3"
-        maxlength="255"
+        maxlength="140"
       ></TextInput>
       <InputError v-if="form.errors?.text" :message="form.errors.text" />
     </form>

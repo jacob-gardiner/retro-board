@@ -20,6 +20,6 @@ class Vote extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Card::class);
+        return $this->belongsTo(User::class);
     }
 }
