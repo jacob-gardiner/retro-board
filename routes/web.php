@@ -13,6 +13,8 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/boards/{board}/invite', \App\Http\Controllers\ShowBoardInviteController::class)->name('boards.invite.show')->middleware('signed');
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

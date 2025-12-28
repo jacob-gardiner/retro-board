@@ -8,6 +8,7 @@ use App\Http\Requests\Boards\UpdateBoardRequest;
 use App\Http\Resources\BoardResource;
 use App\Models\Board;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 class BoardController extends Controller
@@ -38,6 +39,7 @@ class BoardController extends Controller
 
         return Inertia::render('Boards/BoardView', [
             'board' => BoardResource::make($board),
+            'invite_link' => URL::signedRoute('boards.invite.show', ['board' => $board->id]),
         ]);
     }
 
